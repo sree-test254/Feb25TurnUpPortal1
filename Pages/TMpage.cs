@@ -5,18 +5,27 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Feb25TurnUpPortal1.Utilities;
+using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace Feb25TurnUpPortal1.Pages
 {
-    public  class TMpage
+    public class TMpage
     {
         public void CreateTimeRecord(IWebDriver driver)
         {
+            try
+            {
+                IWebElement createNewButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
+                createNewButton.Click();
+            }
+            catch(Exception ex)
+            {
+                Assert.Fail("Create new button hasnot been found");
+            }
             // Click on Create new button
-            IWebElement createNewButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
-            createNewButton.Click();
-            Thread.Sleep(2000);
+            
+            //Thread.Sleep(2000);
 
 
             //select time from dropdown
@@ -60,23 +69,24 @@ namespace Feb25TurnUpPortal1.Pages
 
 
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            Assert.That(newCode.Text == "Feb25TurnUpPortal" , "Record has not been created");
 
-            if (newCode.Text == "Feb25TurnUpPortal")
-            {
-                Console.WriteLine("Records created successfully");
+            //if (newCode.Text == "Feb25TurnUpPortal")
+            //{
+            //    Assert.Pass("Records created successfully");
 
-            }
-            else
-            {
-                Console.WriteLine("New records not to be created");
-            }
+            //}
+            //else
+            //{
+            //    Assert.Fail("New records not to be created");
+            //}
+
         }
-
             //edit time record
-            public void EditTimeRecord(IWebDriver driver) 
-            {
-            
-            }
+            public void EditTimeRecord(IWebDriver driver)
+        {
+
+        }
 
         //delete time record
         public void DeleteTimeRecord(IWebDriver driver)
@@ -88,3 +98,4 @@ namespace Feb25TurnUpPortal1.Pages
 
     }
 }
+

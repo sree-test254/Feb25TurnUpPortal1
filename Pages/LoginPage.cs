@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Feb25TurnUpPortal1.Utilities;
+using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace Feb25TurnUpPortal1.Pages
@@ -17,9 +18,17 @@ namespace Feb25TurnUpPortal1.Pages
             driver.Manage().Window.Maximize();
             Thread.Sleep(2000);
 
+            try
+            {
+                IWebElement createNewButton = driver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
+                createNewButton.Click();
+            }
+            catch(Exception ex)
+            {
+                Assert.Fail("username textbox has not been found");
+            }
             //identify username textbox and enter valid username
-            IWebElement userNameTextbox = driver.FindElement(By.Id("UserName"));
-            userNameTextbox.SendKeys("hari");
+             
 
             Wait.WaittobeVisible(driver, "Id", "Password", 10);
             //identify password textbox and enter valid password
